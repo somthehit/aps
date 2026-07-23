@@ -56,15 +56,8 @@ interface MonthData {
 }
 
 // Hardcoded fallback images (original static images)
-const FALLBACK_LEFT = [
-  "/image/baishajesth2083.jpeg",
-  "/image/bhadauashoj2083.jpeg",
-  "/image/kartikmansir2083.jpeg",
-];
-const FALLBACK_RIGHT = [
-  "/image/paushmagh2083.jpeg",
-  "/image/falgunchaitra2083.jpeg",
-];
+const FALLBACK_LEFT: string[] = [];
+const FALLBACK_RIGHT: string[] = [];
 
 export default function CalendarWidget() {
   const [show, setShow] = useState(false);
