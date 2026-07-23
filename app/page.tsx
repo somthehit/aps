@@ -11,13 +11,19 @@ export const metadata: Metadata = {
   description: 'Official website of Shree Alankar Public School, Punarbas-8, Prithvibasti, Kanchanpur, Nepal. Established 2066 BS.',
 };
 
+import { supabaseAdmin } from '@/lib/supabase-admin';
+
 async function getLatestNotices(): Promise<Notice[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}` : 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/notices?limit=4`, { cache: 'no-store' });
-    if (!res.ok) return [];
-    const json = await res.json();
-    return json.data || [];
+    const { data, error } = await supabaseAdmin()
+      .from('notices')
+      .select('*')
+      .eq('is_published', true)
+      .order('is_pinned', { ascending: false })
+      .order('published_at', { ascending: false })
+      .limit(4);
+    if (error) throw error;
+    return data || [];
   } catch {
     return [];
   }
@@ -25,12 +31,13 @@ async function getLatestNotices(): Promise<Notice[]> {
 
 async function getActiveHeroSlides(): Promise<HeroSlide[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}` : 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/hero-slides`, { cache: 'no-store' });
-    if (!res.ok) return [];
-    const json = await res.json();
-    const allSlides = json.data || [];
-    return allSlides.filter((s: any) => s.is_active);
+    const { data, error } = await supabaseAdmin()
+      .from('hero_slides')
+      .select('*')
+      .eq('is_active', true)
+      .order('display_order', { ascending: true });
+    if (error) throw error;
+    return data || [];
   } catch {
     return [];
   }
@@ -38,11 +45,17 @@ async function getActiveHeroSlides(): Promise<HeroSlide[]> {
 
 async function getSiteSettings(): Promise<Record<string, string>> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}` : 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/settings`, { cache: 'no-store' });
-    if (!res.ok) return {};
-    const json = await res.json();
-    return json.data || {};
+    const { data, error } = await supabaseAdmin()
+      .from('site_settings')
+      .select('*');
+    if (error) throw error;
+    const settingsMap: Record<string, string> = {};
+    if (data) {
+      data.forEach((s) => {
+        settingsMap[s.key] = s.value;
+      });
+    }
+    return settingsMap;
   } catch {
     return {};
   }
@@ -50,11 +63,12 @@ async function getSiteSettings(): Promise<Record<string, string>> {
 
 async function getEvents(): Promise<any[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL ? `${process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000'}` : 'http://localhost:3000';
-    const res = await fetch(`${baseUrl}/api/events`, { cache: 'no-store' });
-    if (!res.ok) return [];
-    const json = await res.json();
-    return json.data || [];
+    const { data, error } = await supabaseAdmin()
+      .from('events')
+      .select('*')
+      .order('display_order', { ascending: true });
+    if (error) throw error;
+    return data || [];
   } catch {
     return [];
   }
