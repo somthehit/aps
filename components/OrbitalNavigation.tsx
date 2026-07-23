@@ -97,14 +97,13 @@ export default function OrbitalNavigation() {
               className="flex flex-col items-center justify-center font-serif"
             >
               {settings.logo_url ? (
-                <div className="w-12 h-12 rounded-full overflow-hidden bg-white/10">
-                  <img src={settings.logo_url} alt="Logo" className="w-full h-full object-contain" />
+                <div className="w-16 h-16 rounded-full overflow-hidden bg-white/10 shadow-md">
+                  <img src={settings.logo_url} alt="Logo" className="w-full h-full object-contain scale-[1.2]" />
                 </div>
               ) : (
-                <>
-                  <span className="text-[#c0392b] text-xs font-bold leading-none">SAPS</span>
-                  <span className="text-white text-[9px] font-medium leading-none tracking-widest">NP</span>
-                </>
+                <div className="w-16 h-16 rounded-full overflow-hidden bg-white p-1.5 shadow-md">
+                  <img src="/vercel.svg" alt="Logo" className="w-full h-full object-contain" />
+                </div>
               )}
             </motion.div>
           )}
@@ -138,12 +137,12 @@ export default function OrbitalNavigation() {
               {/* Drawer Header */}
               <div className="flex flex-col items-center gap-4 py-8 border-b border-[#c0392b]/30 text-center shrink-0">
                 {settings.logo_url ? (
-                  <div className="w-20 h-20 rounded-full border-2 border-[#c0392b] flex items-center justify-center bg-[#0f1e3d] overflow-hidden">
-                    <img src={settings.logo_url} alt="School Logo" className="w-full h-full object-contain bg-white" />
+                  <div className="w-24 h-24 rounded-full border-2 border-[#c0392b] flex items-center justify-center bg-[#0f1e3d] overflow-hidden shadow-lg">
+                    <img src={settings.logo_url} alt="School Logo" className="w-full h-full object-contain bg-white scale-[1.2]" />
                   </div>
                 ) : (
-                  <div className="w-16 h-16 rounded-full border-2 border-[#d4af37] flex items-center justify-center bg-[#0f1e3d] font-serif text-[#d4af37] font-extrabold text-lg">
-                    SAPS
+                  <div className="w-20 h-20 rounded-full border-2 border-[#d4af37] flex items-center justify-center bg-white overflow-hidden p-2 shadow-lg">
+                    <img src="/vercel.svg" alt="Site Logo" className="w-full h-full object-contain" />
                   </div>
                 )}
                 <div className="flex flex-col font-serif">

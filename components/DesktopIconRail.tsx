@@ -71,12 +71,12 @@ export default function DesktopIconRail() {
       <div className="flex flex-col items-center justify-center py-6 border-b border-[#c0392b]/30 h-[120px] shrink-0">
         <Link href="/" className="flex items-center gap-3">
           {settings.logo_url ? (
-            <div className="w-12 h-12 rounded-full border-2 border-[#c0392b] flex items-center justify-center bg-[#0d1b33] shrink-0 overflow-hidden">
-              <img src={settings.logo_url} alt="School Logo" className="w-full h-full object-contain bg-white" />
+            <div className="w-16 h-16 rounded-full border-2 border-[#c0392b] flex items-center justify-center bg-[#0d1b33] shrink-0 overflow-hidden shadow-md">
+              <img src={settings.logo_url} alt="School Logo" className="w-full h-full object-contain bg-white scale-[1.2]" />
             </div>
           ) : (
-            <div className="w-12 h-12 rounded-full border-2 border-[#c0392b] flex items-center justify-center bg-[#0d1b33] font-serif text-[#c0392b] font-extrabold text-sm shrink-0">
-              SAPS
+            <div className="w-16 h-16 rounded-full border-2 border-[#c0392b] flex items-center justify-center bg-white shrink-0 overflow-hidden p-1.5 shadow-md">
+              <img src="/vercel.svg" alt="Site Logo" className="w-full h-full object-contain" />
             </div>
           )}
           

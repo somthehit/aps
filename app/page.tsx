@@ -109,6 +109,9 @@ export default async function HomePage() {
 
   const stats = getStats(siteSettings);
 
+  const currentDate = new Date();
+  const currentYearBS = currentDate.getFullYear() + (currentDate.getMonth() > 3 || (currentDate.getMonth() === 3 && currentDate.getDate() >= 13) ? 57 : 56);
+
   const displayEvents = events.length > 0 ? events.map(e => ({
     date_bs: e.date_bs,
     date_en: new Date(e.date_en).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
@@ -351,23 +354,61 @@ export default async function HomePage() {
       </div>
 
       {/* ── FOOTER ── */}
-      <footer className="mt-12 bg-slate-900">
-        <div className="h-1 bg-gradient-to-r from-teal-500 via-amber-400 to-teal-500" />
+      <footer className="mt-24 bg-slate-900 relative">
+        <div className="absolute top-0 left-0 w-full overflow-hidden leading-[0] transform -translate-y-full">
+          <svg
+            className="relative block w-full h-[60px] sm:h-[80px] md:h-[100px]"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28"
+            preserveAspectRatio="none"
+            shapeRendering="auto"
+          >
+            <defs>
+              <path
+                id="gentle-wave"
+                d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+              />
+            </defs>
+            <g className="parallax">
+              <use href="#gentle-wave" x="48" y="0" className="fill-teal-500/30" />
+              <use href="#gentle-wave" x="48" y="3" className="fill-amber-400/30" />
+              <use href="#gentle-wave" x="48" y="5" className="fill-teal-500/50" />
+              <use href="#gentle-wave" x="48" y="7" className="fill-slate-900" />
+            </g>
+          </svg>
+          <style>{`
+            .parallax > use {
+              animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite;
+            }
+            .parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; }
+            .parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; }
+            .parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; }
+            .parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; }
+            @keyframes move-forever {
+              0% { transform: translate3d(-90px, 0, 0); }
+              100% { transform: translate3d(85px, 0, 0); }
+            }
+          `}</style>
+        </div>
         <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
           <div className="grid md:grid-cols-3 gap-8 mb-10">
             <div>
-              <h4 className="text-white font-bold text-base mb-2">Shree Alankar Public School</h4>
-              <p className="text-xs text-slate-400 nepali-text mb-3">श्री अलंकार पब्लिक स्कूल</p>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <h4 className="font-extrabold text-3xl md:text-4xl mb-2 font-playfair tracking-wide drop-shadow-sm">
+                <span className="text-red-500">Shree Alankar</span>{' '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-amber-500">Public School</span>
+              </h4>
+              <p className="text-base sm:text-lg text-slate-400 nepali-text mb-3 mt-4">श्री अलंकार पब्लिक स्कूल</p>
+              <p className="text-base sm:text-lg text-slate-300 leading-relaxed">
                 Punarbas-8, &quot;Ka Gau&quot;, Kanchanpur, Nepal
               </p>
               {siteSettings?.emis ? (
-                <p className="text-xs text-amber-400/70 mt-2">EMIS: {siteSettings.emis}</p>
+                <p className="text-base sm:text-lg text-amber-400/90 mt-3">EMIS: {siteSettings.emis}</p>
               ) : null}
             </div>
             <div>
-              <h5 className="text-white font-semibold text-sm mb-3">Quick Links</h5>
-              <ul className="space-y-2 text-xs text-slate-400">
+              <h5 className="text-white font-semibold text-lg sm:text-xl mb-4">Quick Links</h5>
+              <ul className="space-y-3 text-base sm:text-lg text-slate-300">
                 <li><Link href="/about" className="hover:text-amber-400 transition-colors">About Us</Link></li>
                 <li><Link href="/academics" className="hover:text-amber-400 transition-colors">Academics</Link></li>
                 <li><Link href="/admission" className="hover:text-amber-400 transition-colors">Admission</Link></li>
@@ -375,15 +416,15 @@ export default async function HomePage() {
               </ul>
             </div>
             <div>
-              <h5 className="text-white font-semibold text-sm mb-3">Contact</h5>
-              <ul className="space-y-2 text-xs text-slate-400">
+              <h5 className="text-white font-semibold text-lg sm:text-xl mb-4">Contact</h5>
+              <ul className="space-y-3 text-base sm:text-lg text-slate-300">
                 <li>Principal: Pusp Raj Ojha</li>
                 <li>Est. {siteSettings.established_year_bs || '2066'} BS</li>
               </ul>
             </div>
           </div>
-          <div className="pt-8 border-t border-slate-800 text-center">
-            <p className="text-xs text-slate-600">© 2081 BS · Shree Alankar Public School · All rights reserved</p>
+          <div className="pt-8 border-t border-slate-700 text-center">
+            <p className="text-sm sm:text-base text-slate-400">© {currentYearBS} BS · Shree Alankar Public School · All rights reserved</p>
           </div>
         </div>
       </footer>
