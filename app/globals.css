@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f4f6fb;
+  --foreground: #1e1e2e;
+  
+  --primary: #1a2d5a;
+  --primary-dark: #0f1e3d;
+  --primary-light: #2d4a8a;
+  --accent: #c0392b;
+  --accent-dark: #96281b;
+  --accent-light: #e74c3c;
+  --gold: #d4af37;
+  --surface: #ffffff;
+  --charcoal: #444466;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --color-gold: var(--gold);
+  --color-surface: var(--surface);
+  --color-charcoal: var(--charcoal);
+  
+  --font-playfair: var(--font-playfair-display), Georgia, serif;
+  --font-inter: var(--font-inter), sans-serif;
+  --font-noto: var(--font-noto-sans), sans-serif;
+  
+  --font-sans: var(--font-inter), sans-serif;
+  --font-serif: var(--font-playfair-display), Georgia, serif;
+}
+
+/* Custom Base Styles */
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Premium Typography Elements */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-playfair-display), Georgia, serif;
+  color: var(--primary);
+}
+
+.nepali-text {
+  font-family: var(--font-noto-sans), sans-serif;
+}
+
+/* Premium Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Temple-style Dhaka Motif Divider */
+.dhaka-divider {
+  height: 28px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='28' viewBox='0 0 60 28'%3E%3Cpath d='M0 14 L15 0 L30 14 L45 0 L60 14 L45 28 L30 14 L15 28 Z' fill='none' stroke='%23c0392b' stroke-width='1.5'/%3E%3Ccircle cx='30' cy='14' r='3' fill='%231a2d5a'/%3E%3Ccircle cx='0' cy='14' r='2' fill='%23d4af37'/%3E%3Ccircle cx='60' cy='14' r='2' fill='%23d4af37'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  width: 100%;
+  margin: 2rem 0;
+  opacity: 0.85;
+}
+
+/* Temple hero bottom SVG clip */
+.temple-bottom {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.gold-border-fancy {
+  border: 4px double var(--gold);
+  position: relative;
+}
+
+.parchment-glow {
+  box-shadow: inset 0 0 40px rgba(26, 58, 42, 0.05), 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* For printing */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-only {
+    display: block !important;
+  }
+}
