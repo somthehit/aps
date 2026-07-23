@@ -76,7 +76,7 @@ export default function DesktopIconRail() {
             </div>
           ) : (
             <div className="w-16 h-16 rounded-full border-2 border-[#c0392b] flex items-center justify-center bg-white shrink-0 overflow-hidden p-1.5 shadow-md">
-              <img src="/vercel.svg" alt="Site Logo" className="w-full h-full object-contain" />
+              <img src="/school-logo.svg" alt="Site Logo" className="w-full h-full object-contain" />
             </div>
           )}
           

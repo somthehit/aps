@@ -24,6 +24,8 @@ interface ImageUploaderProps {
   label?: string;
   constraints?: ResolutionConstraint;
   className?: string;
+  skipCrop?: boolean;
+  compact?: boolean;
 }
 
 export default function ImageUploader({
@@ -32,6 +34,8 @@ export default function ImageUploader({
   label = "Upload Image",
   constraints,
   className = "",
+  skipCrop = false,
+  compact = false,
 }: ImageUploaderProps) {
   const [phase, setPhase] = useState<"idle" | "crop" | "uploading">("idle");
   const [src, setSrc] = useState("");
@@ -84,6 +88,12 @@ export default function ImageUploader({
         setSrc(ev.target?.result as string);
         setFile(f);
         setImgSize({ w, h });
+
+        if (skipCrop) {
+          uploadDirect(f);
+          return;
+        }
+
         // initial crop: centered 80%
         const cw = Math.round(w * 0.8);
         const ch = Math.round(h * 0.8);
@@ -123,6 +133,27 @@ export default function ImageUploader({
     } catch (err: any) {
       alert("Upload failed: " + err.message);
       setPhase("crop");
+    }
+  };
+
+  const uploadDirect = async (fileToUpload: File) => {
+    setPhase("uploading");
+    try {
+      const fd = new FormData();
+      fd.append("file", fileToUpload);
+      fd.append("folder", folder);
+
+      const resp = await fetch("/api/upload", { method: "POST", body: fd });
+      const json = await resp.json();
+      if (!json.success) throw new Error(json.error || "Upload failed");
+
+      onUpload(json.url);
+      setPhase("idle");
+      setSrc("");
+      setFile(null);
+    } catch (err: any) {
+      alert("Upload failed: " + err.message);
+      setPhase("idle");
     }
   };
 
@@ -178,10 +209,10 @@ export default function ImageUploader({
   if (phase === "idle") {
     return (
       <div className={`relative ${className}`}>
-        <label className="flex flex-col items-center justify-center w-full min-h-[120px] px-4 py-6 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 hover:bg-slate-100 hover:border-teal-400 cursor-pointer transition-all">
-          <Upload className="w-8 h-8 text-slate-400 mb-2" />
-          <span className="text-sm font-medium text-slate-600">{label}</span>
-          <span className="text-xs text-slate-400 mt-1">Click to browse (supports crop)</span>
+        <label className={`flex flex-col items-center justify-center w-full ${compact ? 'min-h-[80px] py-3' : 'min-h-[120px] px-4 py-6'} border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 hover:bg-slate-100 hover:border-teal-400 cursor-pointer transition-all`}>
+          <Upload className={`${compact ? 'w-5 h-5 mb-1' : 'w-8 h-8 mb-2'} text-slate-400`} />
+          <span className={`${compact ? 'text-sm' : 'text-sm'} font-medium text-slate-600`}>{label}</span>
+          <span className="text-xs text-slate-400 mt-1">Click to browse {skipCrop ? '' : '(supports crop)'}</span>
           <input type="file" className="hidden" accept="image/*" onChange={handleFileSelect} />
         </label>
         {validationError && (

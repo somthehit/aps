@@ -102,7 +102,7 @@ export default function OrbitalNavigation() {
                 </div>
               ) : (
                 <div className="w-16 h-16 rounded-full overflow-hidden bg-white p-1.5 shadow-md">
-                  <img src="/vercel.svg" alt="Logo" className="w-full h-full object-contain" />
+                  <img src="/school-logo.svg" alt="Logo" className="w-full h-full object-contain" />
                 </div>
               )}
             </motion.div>
@@ -142,7 +142,7 @@ export default function OrbitalNavigation() {
                   </div>
                 ) : (
                   <div className="w-20 h-20 rounded-full border-2 border-[#d4af37] flex items-center justify-center bg-white overflow-hidden p-2 shadow-lg">
-                    <img src="/vercel.svg" alt="Site Logo" className="w-full h-full object-contain" />
+                    <img src="/school-logo.svg" alt="Site Logo" className="w-full h-full object-contain" />
                   </div>
                 )}
                 <div className="flex flex-col font-serif">

@@ -276,9 +276,15 @@ export default async function HomePage() {
         <section className="py-12 grid lg:grid-cols-5 gap-10 items-center">
           <div className="lg:col-span-2 flex flex-col items-center lg:items-start">
             <div className="relative mb-5">
-              <div className="w-36 h-36 rounded-2xl bg-gradient-to-br from-teal-400 to-blue-600 flex items-center justify-center text-5xl shadow-xl shadow-teal-200/50">
-                🎓
-              </div>
+              {siteSettings.principal_image_url ? (
+                <div className="w-36 h-36 rounded-2xl overflow-hidden shadow-xl shadow-teal-200/50 border-2 border-teal-100">
+                  <img src={siteSettings.principal_image_url} alt="Principal" className="w-full h-full object-cover" />
+                </div>
+              ) : (
+                <div className="w-36 h-36 rounded-2xl bg-gradient-to-br from-teal-400 to-blue-600 flex items-center justify-center text-5xl shadow-xl shadow-teal-200/50">
+                  🎓
+                </div>
+              )}
               <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-xl bg-amber-400 flex items-center justify-center text-lg shadow-lg">
                 ✨
               </div>

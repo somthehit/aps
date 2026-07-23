@@ -191,6 +191,7 @@ Thank you. Wishing everyone a highly productive and fulfilling academic year.`,
     emis: "720120015",
     schoolCode: "SC-0000",
     logoUrl: "",
+    principalImageUrl: "",
     phoneEn: "099422015",
     phoneNp: "०९९४२२०१५",
     email: "alankarpublicschool@gmail.com",
@@ -254,29 +255,30 @@ Thank you. Wishing everyone a highly productive and fulfilling academic year.`,
       if (json.success && json.data) {
         const s = json.data;
         const mapped: Record<string, any> = {
-          mottoEn: s.school_motto_en,
-          mottoNp: s.school_motto_np,
-          principalMessageEn: s.principal_message_en,
-          principalMessageNp: s.principal_message_np,
-          announcementTextEn: s.announcement_text_en,
-          announcementTextNp: s.announcement_text_np,
-          totalStudents: s.total_students,
-          totalStaff: s.total_staff,
-          establishedYearBS: s.established_year_bs,
-          schoolClasses: s.school_classes,
-          phoneEn: s.phone,
-          email: s.email,
-          addressEn: s.address_en,
-          addressNp: s.address_np,
-          emis: s.emis,
-          schoolCode: s.school_code,
-          logoUrl: s.logo_url,
-          calendar_year: s.calendar_year,
+          mottoEn: s.school_motto_en || "",
+          mottoNp: s.school_motto_np || "",
+          principalMessageEn: s.principal_message_en || "",
+          principalMessageNp: s.principal_message_np || "",
+          announcementTextEn: s.announcement_text_en || "",
+          announcementTextNp: s.announcement_text_np || "",
+          totalStudents: s.total_students || "",
+          totalStaff: s.total_staff || "",
+          establishedYearBS: s.established_year_bs || "",
+          schoolClasses: s.school_classes || "",
+          phoneEn: s.phone || "",
+          email: s.email || "",
+          addressEn: s.address_en || "",
+          addressNp: s.address_np || "",
+          emis: s.emis || "",
+          schoolCode: s.school_code || "",
+          logoUrl: s.logo_url || "",
+          principalImageUrl: s.principal_image_url || "",
+          calendar_year: s.calendar_year || "",
           announcementVisible: s.announcement_visible === 'true',
           maintenanceMode: s.maintenance_mode === 'true',
           popupNoticeEnabled: s.popup_notice_enabled === 'true',
-          popupNoticeEn: s.popup_notice_en,
-          popupNoticeNp: s.popup_notice_np,
+          popupNoticeEn: s.popup_notice_en || "",
+          popupNoticeNp: s.popup_notice_np || "",
           announcementLabelEn: s.announcement_label_en || "URGENT:",
           announcementLabelNp: s.announcement_label_np || "महत्वपूर्ण सूचना:",
         };
@@ -593,6 +595,7 @@ Thank you. Wishing everyone a highly productive and fulfilling academic year.`,
         emis: siteSettings.emis || "",
         school_code: siteSettings.schoolCode || "",
         logo_url: siteSettings.logoUrl || "",
+        principal_image_url: siteSettings.principalImageUrl || "",
         calendar_year: siteSettings.calendar_year,
         announcement_visible: String(siteSettings.announcementVisible),
         maintenance_mode: String(siteSettings.maintenanceMode),
@@ -1874,6 +1877,26 @@ Thank you. Wishing everyone a highly productive and fulfilling academic year.`,
                 </div>
               </div>
 
+              {/* Principal Message */}
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-semibold text-[#1a3a2a]">Principal Message (English)</label>
+                  <textarea
+                    value={siteSettings.principalMessageEn}
+                    onChange={(e) => setSiteSettings({ ...siteSettings, principalMessageEn: e.target.value })}
+                    className="p-2.5 border border-[#c9a227]/30 bg-[#fdf6e3]/30 rounded focus:outline-none min-h-[120px]"
+                  />
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <label className="font-semibold text-[#1a3a2a]">Principal Message (Nepali Devanagari)</label>
+                  <textarea
+                    value={siteSettings.principalMessageNp}
+                    onChange={(e) => setSiteSettings({ ...siteSettings, principalMessageNp: e.target.value })}
+                    className="p-2.5 border border-[#c9a227]/30 bg-[#fdf6e3]/30 rounded focus:outline-none font-bold min-h-[120px]"
+                  />
+                </div>
+              </div>
+
               {/* EMIS & Announcement text */}
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="flex flex-col gap-1.5">
@@ -1975,6 +1998,34 @@ Thank you. Wishing everyone a highly productive and fulfilling academic year.`,
                       }}
                       folder="logos"
                       label="Upload School Logo"
+                      skipCrop
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Principal Image Upload */}
+              <div className="flex flex-col gap-1.5 mt-4">
+                <label className="font-semibold text-[#1a3a2a]">Principal Image</label>
+                <div className="flex gap-4 items-center">
+                  {siteSettings.principalImageUrl && (
+                    <div className="w-12 h-12 rounded-lg border-2 border-[#c9a227] overflow-hidden shrink-0 bg-[#1a3a2a]">
+                      <img src={siteSettings.principalImageUrl} alt="Principal" className="w-full h-full object-cover" />
+                    </div>
+                  )}
+                  <div className="flex-1">
+                    <ImageUploader
+                      onUpload={(url) => {
+                        setSiteSettings((prev) => ({ ...prev, principalImageUrl: url }));
+                        fetch('/api/settings', {
+                          method: 'PUT',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ principal_image_url: url }),
+                        }).catch(() => {});
+                      }}
+                      folder="staff"
+                      label="Upload Principal Image"
+                      skipCrop
                     />
                   </div>
                 </div>
